@@ -14,13 +14,10 @@ sequelize.authenticate().then(function(){
 })
 
 const Movies = sequelize.define('movies', {
-    movie_id: {
-        type: Sequelize.INTEGER,
-        field: 'movie_id'
-    },
-    imdb_id: {
-        type: Sequelize.INTEGER,
-        field: 'imdb_id'
+
+    tmdb_id: {
+        type: Sequelize.STRING,
+        field: 'tmdb_id'
     },
     title: {
         type: Sequelize.STRING,
@@ -49,10 +46,6 @@ const Movies = sequelize.define('movies', {
 });
 
 const Genres = sequelize.define('genres', {
-    genre_id: {
-        type: Sequelize.INTEGER,
-        field: 'genre_id'
-    },
     name: {
         type: Sequelize.STRING,
         field: 'name'
@@ -76,11 +69,7 @@ const Cast = sequelize.define('cast', {
 });
 
 const Actors = sequelize.define('actors', {
-   
-   actor_id: {
-       type: Sequelize.INTEGER,
-       field: 'actor_id'
-   },
+
     actor_name: {
         type: Sequelize.STRING,
         field: 'actor_name'
@@ -92,8 +81,8 @@ const Actors = sequelize.define('actors', {
 });
 
 const Users = sequelize.define('users', {
-    user_id: {
-        type: Sequelize.INTEGER,
+    user_name: {
+        type: Sequelize.STRING,
         field: 'user_id'
     },
     password: {
@@ -133,7 +122,330 @@ app.get('/createdb', function(request, response){
     })
 })
 
+//users
+app.post('/users', (request, response) => {
+    Users.create(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(500).send("resource not created")
+    })
+})
+
+app.get('/users', (request, response) => {
+    Users.findAll().then((results) => {
+        response.status(200).json(results)
+    })
+})
+
+app.get('/users/:id',(request, response)=>{
+    Users.findById(request.params.id).then((result)=>{
+       if(result) {
+            response.status(200).json(result)
+        } else {
+            response.status(404).send('no resource found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.delete('/users/:id', (request, response) => {
+    Users.findById(request.params.id).then((user) => {
+        if(user) {
+            user.destroy().then((result) => {
+                response.status(204).send()
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.put('/users/:id', (request, response) => {
+    Users.findById(request.params.id).then((user) => {
+        if(user) {
+            user.update(request.body).then((result) => {
+                response.status(201).json(result)
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+
+//movies
+app.post('/movies', (request, response) => {
+    Movies.create(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(500).send("resource not created")
+    })
+})
+
+app.get('/movies', (request, response) => {
+    Movies.findAll().then((results) => {
+        response.status(200).json(results)
+    })
+})
+
+app.get('/movies/:id', (request, response) => {
+    Movies.findById(request.params.id).then((result) => {
+        if(result) {
+            response.status(200).json(result)
+        } else {
+            response.status(404).send('ID not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.delete('/movies/:id', (request, response) => {
+    Movies.findById(request.params.id).then((movie) => {
+        if(movie) {
+            movie.destroy().then((result) => {
+                response.status(204).send()
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.put('/movies/:id', (request, response) => {
+    Movies.findById(request.params.id).then((movie) => {
+        if(movie) {
+            movie.update(request.body).then((result) => {
+                response.status(201).json(result)
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+//genres
+app.post('/genres', (request, response) => {
+    Genres.create(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(500).send("resource not created")
+    })
+})
+
+app.get('/genres', (request, response) => {
+    Genres.findAll().then((results) => {
+        response.status(200).json(results)
+    })
+})
+
+app.get('/genres/:id', (request, response) => {
+    Genres.findById(request.params.id).then((result) => {
+        if(result) {
+            response.status(200).json(result)
+        } else {
+            response.status(404).send('ID not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.delete('/genres/:id', (request, response) => {
+    Genres.findById(request.params.id).then((genre) => {
+        if(genre) {
+            genre.destroy().then((result) => {
+                response.status(204).send()
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.put('/genres/:id', (request, response) => {
+    Genres.findById(request.params.id).then((genre) => {
+        if(genre) {
+            genre.update(request.body).then((result) => {
+                response.status(201).json(result)
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+//actors
+app.post('/actors', (request, response) => {
+    Actors.create(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(500).send("resource not created")
+    })
+})
+
+app.get('/actors', (request, response) => {
+    Actors.findAll().then((results) => {
+        response.status(200).json(results)
+    })
+})
+
+app.get('/actors/:id',(request, response)=>{
+    Actors.findById(request.params.id).then((result)=>{
+       if(result) {
+            response.status(200).json(result)
+        } else {
+            response.status(404).send('no resource found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.delete('/actors/:id', (request, response) => {
+    Actors.findById(request.params.id).then((actor) => {
+        if(actor) {
+            actor.destroy().then((result) => {
+                response.status(204).send()
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.put('/actors/:id', (request, response) => {
+    Actors.findById(request.params.id).then((actor) => {
+        if(actor) {
+            actor.update(request.body).then((result) => {
+                response.status(201).json(result)
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+//cast
+app.post('/cast', (request, response) => {
+    Cast.create(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(500).send("resource not created")
+    })
+})
+
+app.get('/cast', (request, response) => {
+    Cast.findAll().then((results) => {
+        response.status(200).json(results)
+    })
+})
+
+app.get('/cast/:id',(request, response)=>{
+    Cast.findById(request.params.id).then((result)=>{
+       if(result) {
+            response.status(200).json(result)
+        } else {
+            response.status(404).send('no resource found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.delete('/cast/:id', (request, response) => {
+    Cast.findById(request.params.id).then((cast) => {
+        if(cast) {
+            cast.destroy().then((result) => {
+                response.status(204).send()
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+app.put('/cast/:id', (request, response) => {
+    Cast.findById(request.params.id).then((cast) => {
+        if(cast) {
+            cast.update(request.body).then((result) => {
+                response.status(201).json(result)
+            }).catch((err) => {
+                console.log(err)
+                response.status(500).send('database error')
+            })
+        } else {
+            response.status(404).send('resource not found')
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.status(500).send('database error')
+    })
+})
+
+
 
 app.listen(8080)
+
 
 
