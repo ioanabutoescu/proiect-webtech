@@ -122,8 +122,18 @@ app.get('/createdb', function(request, response){
     })
 })
 
+
+app.post('/login', (request, response) => {
+    Users.findOne(request.body).then((result) => {
+        response.status(201).json(result)
+    }).catch((err) => {
+        response.status(404).send("User not found")
+    })
+})
+
 //users
-app.post('/users', (request, response) => {
+
+app.post('/user', (request, response) => {
     Users.create(request.body).then((result) => {
         response.status(201).json(result)
     }).catch((err) => {

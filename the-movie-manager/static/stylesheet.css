@@ -1,0 +1,118 @@
+body 
+    { 
+        font-family: American Typewriter, serif;
+    }
+    
+form 
+    {
+        padding: 16px;
+        padding-top: 100px;
+        text-align: center;
+        
+    }
+    
+#welcome{
+    display: none;
+}
+    
+#signUp{
+          text-align: center;
+}
+#logInBtn{
+  background-color: #1E90FF;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+}
+#logInBtn:hover {
+  opacity: 0.8;
+}
+
+#SignUpBtn{
+     background-color: #1E90FF;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+}
+#SignUpBtn:hover {
+  opacity: 0.8;
+}
+
+input[type=text], input[type=password] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#header{
+  text-align: center;
+  font-family:American Typewriter, serif;
+  font-size: 40px;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 30px 10px;
+}
+
+#signUpForm{
+     text-align: left;
+      padding-top: 10px;
+}
+#signUpHead{
+  font-family:American Typewriter, serif;
+  font-size: 30px;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 30px 10px;
+}
+
+p{
+    font-size: 20px;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+
+.search{
+    overflow: hidden;
+}
+
+.search input[type=text] {
+  float: left;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+}
+
+.container{
+    font-family: American Typewriter, serif;
+    font-size: 30px;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.favorites{
+    
+    font-family: American Typewriter, serif;
+
+}
+
+.addmovie{
+  background-color: #1E90FF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
